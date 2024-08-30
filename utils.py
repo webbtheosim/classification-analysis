@@ -41,7 +41,7 @@ def get_labels(key):
         if value == 'xgb':
             vals[index] = 'XGB'
         if value == 'ensemble_top':
-            vals[index] = 'Ens.'
+            vals[index] = 'Hyperparameter'
         if value == 'ensemble_averaging':
             vals[index] = 'Averaging'
         if value == 'ensemble_stacking':
@@ -86,16 +86,38 @@ def get_colors(label, ensemble=False):
 
     else:
         colors = {
-            'Hyperparameter': '#22B3FF',
-            'Averaging': '#FF4D6C',
-            'Stacking': '#00C086',
-            'Arbitrating': '#B77EFF'
+            'Hyperparameter': '#91dbff',
+            'Averaging': '#fe7c7c',
+            'Stacking': '#a7f8dd',
+            'Arbitrating': '#ca9fff'
         }
 
     # Provide appropriate color for provided label.
     for key in colors.keys():
         if key in label:
             return colors[key]
+
+def load_baseline_raw():
+
+    # Load individual raw baseline files.
+    import pickle
+    data_1 = pickle.load(open('baseline/baseline_raw_1.pickle', 'rb'))
+    data_2 = pickle.load(open('baseline/baseline_raw_2.pickle', 'rb'))
+    data_3 = pickle.load(open('baseline/baseline_raw_3.pickle', 'rb'))
+    data_4 = pickle.load(open('baseline/baseline_raw_4.pickle', 'rb'))
+
+    # Load data into a single dictionary. 
+    data = {}
+    for task in data_1.keys():
+        data[task] = data_1[task]
+    for task in data_2.keys():
+        data[task] = data_2[task]
+    for task in data_3.keys():
+        data[task] = data_3[task]
+    for task in data_4.keys():
+        data[task] = data_4[task]
+        
+    return data
 
 # Common groupings of tasks for sensitivity analyses.
 all_tasks = ['bace', 'bear', 'clintox', 'diblock', 'electro', 'esol', 'free', 'glotzer_pf', 

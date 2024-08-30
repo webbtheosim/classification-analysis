@@ -51,7 +51,7 @@ if __name__ == '__main__':
         if config['use_baseline']:
 
             # Read in baseline performances.
-            baseline_dict = pickle.load(open('baseline.pickle', 'rb'))
+            baseline_dict = pickle.load(open('baseline/baseline.pickle', 'rb'))
 
             for key, value in plot_data.items():
                 vals    = key.split('-')

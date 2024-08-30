@@ -13,9 +13,9 @@ if __name__ == '__main__':
         'schemes': ['al', 'sf'],
         'samplers': ['random', 'maximin', 'medoids', 'max_entropy', 'vendi'],
         'models': ['nn', 'rf', 'xgb', 'gpc_ard', 'gpr_ard', 'gpc', 'gpr', 'sv', 'lp', 'bkde'],
-        'round': 10,           # Rounds vary from 0-10.
+        'round': 7,           # Rounds vary from 0-10.
         'metric': 1,           # 0 - Balanced Accuracy, 1 - Macro F1, 2 - Matt. Corr. Coeff.
-        'use_baseline': False,  # True uses baseline for comparison. False only uses the metric.
+        'use_baseline': True,  # True uses baseline for comparison. False only uses the metric.
         'labels': False,       # False removes labels from final figure.
         'save_fig': './figures/fig3.png' # Specifies path for saving figure.
     }
@@ -53,7 +53,7 @@ if __name__ == '__main__':
         if config['use_baseline']:
 
             # Read in baseline performances.
-            baseline_dict = pickle.load(open('baseline.pickle', 'rb'))
+            baseline_dict = pickle.load(open('baseline/baseline.pickle', 'rb'))
 
             for key, value in plot_data.items():
                 vals    = key.split('-')
@@ -129,17 +129,18 @@ if __name__ == '__main__':
     if config['use_baseline'] and config['labels']:
         ax.set_xlabel(r'$\langle\xi\rangle$ / $\langle\xi\rangle_{max}$')
         ax.set_xticks(ticks=[0.0, 0.2, 0.4, 0.6, 0.8])
-        ax.set_xlim([0.0, 0.8])
+        ax.set_xlim([0.0, 0.85])
     if not config['use_baseline'] and config['labels']:
         ax.set_xlabel(r'Macro $F_1$ / Macro $F_{1,max}$')
-        ax.set_xticks(ticks=[0.9, 0.92, 0.94, 0.96, 0.98])
-        ax.set_xlim([0.9, 0.98])
+        ax.set_xticks(ticks=[0.9, 0.92, 0.94, 0.96, 0.98, 1.0])
+        ax.set_xlim([0.9, 1.00])
     if config['use_baseline'] and not config['labels']:
         ax.set_xlabel('')
-        ax.set_xlim([0.0, 0.8])
+        ax.set_xlim([0.0, 0.85])
+        ax.set_xticks(ticks=[0.0, 0.2, 0.4, 0.6, 0.8])
     if not config['use_baseline'] and not config['labels']:
-        ax.set_xticks(ticks=[0.9, 0.92, 0.94, 0.96, 0.98])
-        ax.set_xlim([0.9, 0.98])
+        ax.set_xticks(ticks=[0.9, 0.92, 0.94, 0.96, 0.98, 1.0])
+        ax.set_xlim([0.9, 1.00])
         ax.tick_params(axis='both', bottom=False, top=False)
     if config['save_fig'] is not None:
         plt.savefig(f'{config["save_fig"]}', dpi=1000)

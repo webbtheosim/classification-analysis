@@ -9,7 +9,7 @@ if __name__ == '__main__':
     # User specification of what tasks and strategies should be considered, what metrics
     # should be used, save options, etc.
     config = {
-        'tasks': all_tasks,
+        'tasks': ['electro'],
         'schemes': ['al', 'sf'],
         'samplers': ['random', 'maximin', 'medoids', 'max_entropy', 'vendi'],
         'models': ['nn', 'rf', 'xgb', 'gpc_ard', 'gpr_ard', 'gpc', 'gpr', 'sv', 'lp', 'bkde'],
@@ -22,7 +22,7 @@ if __name__ == '__main__':
 
     # Read in algorithm and baseline results.
     results_dict = pickle.load(open('results.pickle', 'rb'))
-    baseline_dict = pickle.load(open('baseline.pickle', 'rb'))
+    baseline_dict = pickle.load(open('baseline/baseline.pickle', 'rb'))
 
     # Set up figure.
     colors = ['#ffca8c','#91dbff']

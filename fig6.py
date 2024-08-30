@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pickle
 
-from utils import get_labels, all_tasks
+from utils import get_labels, all_tasks, load_baseline_raw
 
 if __name__ == '__main__':
 
@@ -13,16 +13,16 @@ if __name__ == '__main__':
         'scheme': 'al',
         'samplers': ['random', 'maximin', 'medoids', 'max_entropy', 'vendi'],
         'models': ['nn', 'rf', 'xgb', 'gpc_ard', 'gpr_ard', 'gpc', 'gpr', 'sv', 'lp', 'bkde'],
-        'round': 10,           # Rounds vary from 0-10.
+        'round': 1,           # Rounds vary from 0-10.
         'metric': 1,           # 0 - Balanced Accuracy, 1 - Macro F1, 2 - Matt. Corr. Coeff.
         'use_baseline': True,  # True uses baseline for comparison. False only uses the metric.
-        'labels': True,       # False removes labels from final figure.
+        'labels': False,       # False removes labels from final figure.
         'save_fig': './figures/fig6.png' # Specifies path for saving figure.
     }
 
     # Read in algorithm and baseline performance.
     results_dict = pickle.load(open('results.pickle', 'rb'))
-    baseline_dict = pickle.load(open('baseline_raw.pickle', 'rb'))
+    baseline_dict = load_baseline_raw()
 
     # Set up figure.
     plt.rcParams['font.family'] = 'Arial'

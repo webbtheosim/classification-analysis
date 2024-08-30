@@ -48,7 +48,7 @@ if __name__ == '__main__':
 
         # Read in baseline performances.
         adjusted_performance = {}
-        baseline_dict = pickle.load(open('baseline.pickle', 'rb'))
+        baseline_dict = pickle.load(open('baseline/baseline.pickle', 'rb'))
         for key, value in plot_data.items():
             vals    = key.split('-')
             scheme  = vals[0]

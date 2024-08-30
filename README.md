@@ -12,4 +12,4 @@ Every figure can be reproduced using the script with the appropriate name (`fig3
 
 ### Package Dependencies
 
-The packages required for the analysis scripts above can be installed using the `requirements.txt` file shown. Many scripts also use code from the `ClassificationSuite` Python package that can be installed following the instructions at the [classification-suite](https://github.com/webbtheosim/classification-suite) repository.
+The packages required for the analysis scripts above can be installed using the `requirements.txt` file shown. `prep_metafeatures.py` also uses code from the `ClassificationSuite` Python package that can be installed following the instructions at the [classification-suite](https://github.com/webbtheosim/classification-suite) repository.

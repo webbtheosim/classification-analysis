@@ -1,0 +1,119 @@
+def get_labels(key):
+    '''Method for cleaning up the label of the key entry for plotting.'''
+
+    # Split up key into component parts.
+    vals = key.split('-')
+
+    # Replace each component with appropriate entry.
+    for index, value in enumerate(vals):
+        if value == 'al':
+            vals[index] = 'AL,'
+        if value == 'sf':
+            vals[index] = 'SF,'
+        if value == 'random':
+            vals[index] = 'Random,'
+        if value == 'maximin':
+            vals[index] = 'Maximin,'
+        if value == 'medoids':
+            vals[index] = 'Medoids,'
+        if value == 'max_entropy':
+            vals[index] = 'Max Ent.,'
+        if value == 'vendi':
+            vals[index] = 'Vendi,'
+        if value == 'gpc':
+            vals[index] = 'GPC'
+        if value == 'gpc_ard':
+            vals[index] = 'GPC (ARD)'
+        if value == 'gpr':
+            vals[index] = 'GPR'
+        if value == 'gpr_ard':
+            vals[index] = 'GPR (ARD)'
+        if value == 'bkde':
+            vals[index] = 'BKDE'
+        if value == 'lp':
+            vals[index] = 'LP'
+        if value == 'nn':
+            vals[index] = 'NN'
+        if value == 'rf':
+            vals[index] = 'RF'
+        if value == 'sv':
+            vals[index] = 'SV'
+        if value == 'xgb':
+            vals[index] = 'XGB'
+        if value == 'ensemble_top':
+            vals[index] = 'Ens.'
+        if value == 'ensemble_averaging':
+            vals[index] = 'Averaging'
+        if value == 'ensemble_stacking':
+            vals[index] = 'Stacking'
+        if value == 'ensemble_arbitrating':
+            vals[index] = 'Arbitrating'
+        
+    return ' '.join(vals)
+
+def get_colors(label, ensemble=False):
+    '''Method for determining color of the bar based on the label.'''
+
+    # Color definitions.
+    if not ensemble:
+        colors = {
+            'NN': '#22B3FF',
+            'RF': '#FF4D6C',
+            'XGB': '#B77EFF',
+            'GPR (ARD)': '#28EAAA',
+            'GPR': '#28EAAA',
+            'GPC (ARD)': '#00C086',
+            'GPC': '#00C086',
+            'SV': '#FFB256',
+            'LP': 'white',
+            'BKDE': 'white',
+            'E': '#FFD516',
+        }
+
+        colors = {
+            'NN': '#91dbff',
+            'RF': '#fe7c7c',
+            'XGB': '#ca9fff',
+            'GPR (ARD)': '#a7f8dd',
+            'GPR': '#a7f8dd',
+            'GPC (ARD)': '#01ce90',
+            'GPC': '#01ce90',
+            'SV': '#ffca8c',
+            'LP': 'white',
+            'BKDE': 'white',
+            'E': '#fff2a1',
+        }
+
+    else:
+        colors = {
+            'Hyperparameter': '#22B3FF',
+            'Averaging': '#FF4D6C',
+            'Stacking': '#00C086',
+            'Arbitrating': '#B77EFF'
+        }
+
+    # Provide appropriate color for provided label.
+    for key in colors.keys():
+        if key in label:
+            return colors[key]
+
+# Common groupings of tasks for sensitivity analyses.
+all_tasks = ['bace', 'bear', 'clintox', 'diblock', 'electro', 'esol', 'free', 'glotzer_pf', 
+    'glotzer_xa', 'hiv', 'hplc', 'lipo', 'muv', 'oer', 'oxidation', 'perovskite', 
+    'polygel', 'polysol', 'princeton', 'qm9_cv', 'qm9_gap', 'qm9_r2', 'qm9_u0', 
+    'qm9_zpve', 'robeson', 'shower', 'toporg', 'tox21', 'vdw', 'water_hp', 'water_lp'
+]
+rf_tasks = ['clintox', 'diblock', 'esol', 'hplc', 'perovskite', 'polygel', 'polysol', 
+    'qm9_r2', 'qm9_zpve', 'robeson'
+]
+nn_tasks = [
+    'bear', 'free', 'glotzer_pf', 'glotzer_xa', 'muv', 'toporg', 'vdw', 'water_hp', 'water_lp'
+]
+high_d_tasks = [
+    'bace', 'bear', 'clintox', 'esol', 'free', 'hiv', 'lipo', 'muv', 'perovskite', 'polygel', 
+    'polysol', 'qm9_cv', 'qm9_gap', 'qm9_r2', 'qm9_u0', 'qm9_zpve', 'robeson', 'toporg', 'tox21'
+]
+low_d_tasks = [
+    'glotzer_pf', 'glotzer_xa', 'oxidation', 'princeton', 'shower', 'vdw', 'water_hp', 'water_lp',
+    'diblock', 'bear', 'electro', 'hplc', 'oer'
+]

@@ -2,6 +2,8 @@
 
 This repository contains the data and analysis scripts required to reproduce the results shown in [Data Efficiency of Classification Strategies for Chemical and Materials Design](https://doi.org/10.26434/chemrxiv-2024-1sspf).
 
+![Top-Performing Algorithms](figures/optimal.png)
+
 Every figure can be reproduced using the script with the appropriate name (e.g., `fig3.py` recreates Figure 3). We also include the script `prep_metafeatures.py` that downselects the set of unique and uncorrelated metafeatures (stored in `metafeatures.pickle`) used in the sequential feature addition conducted in `sfa_and_fig8.py`.
 
 ### Data Files

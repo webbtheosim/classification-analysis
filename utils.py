@@ -1,4 +1,4 @@
-def get_labels(key, mol_feat=False):
+def get_labels(key, mol_feat=False, ensemble=False):
     '''Method for cleaning up the label of the key entry for plotting.'''
 
     # Split up key into component parts.
@@ -40,7 +40,9 @@ def get_labels(key, mol_feat=False):
             vals[index] = 'SV'
         if value == 'xgb':
             vals[index] = 'XGB'
-        if value == 'ensemble_top':
+        if value == 'ensemble_top' and ensemble:
+            vals[index] = 'Hyperparameter'
+        if value == 'ensemble_top' and not ensemble:
             vals[index] = 'Ensemble'
         if value == 'ensemble_averaging':
             vals[index] = 'Averaging'

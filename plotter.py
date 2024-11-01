@@ -83,8 +83,8 @@ if __name__ == '__main__':
             align='center', error_kw=error_kw, zorder=2)
         axs[0].xaxis.grid(True, zorder=1)
         axs[0].invert_yaxis()
-        axs[0].set_xlim(xmin=0.90, xmax=0.98)
-        axs[0].set_xticks(ticks=[0.90, 0.92, 0.94, 0.96, 0.98])
+        axs[0].set_xlim(xmin=0.90, xmax=1.00)
+        axs[0].set_xticks(ticks=[0.90, 0.92, 0.94, 0.96, 0.98, 1.00])
         axs[0].set_xlabel(r'$\langle F_1 / F_{1,\text{max}} \rangle$')
         axs[0].tick_params(axis='x', length=0)
 

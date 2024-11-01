@@ -16,6 +16,7 @@ if __name__ == '__main__':
         'round': 10,           # Rounds vary from 0-10.
         'metric': 1,           # 0 - Balanced Accuracy, 1 - Macro F1, 2 - Matt. Corr. Coeff.
     }
+    config['tasks'] = ['electro']
 
     # Read in algorithm and baseline results.
     results_dict = pickle.load(open('results.pickle', 'rb'))

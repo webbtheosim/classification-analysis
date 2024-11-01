@@ -1,4 +1,4 @@
-def get_labels(key):
+def get_labels(key, mol_feat=False):
     '''Method for cleaning up the label of the key entry for plotting.'''
 
     # Split up key into component parts.
@@ -41,15 +41,35 @@ def get_labels(key):
         if value == 'xgb':
             vals[index] = 'XGB'
         if value == 'ensemble_top':
-            vals[index] = 'Hyperparameter'
+            vals[index] = 'Ensemble'
         if value == 'ensemble_averaging':
             vals[index] = 'Averaging'
         if value == 'ensemble_stacking':
             vals[index] = 'Stacking'
         if value == 'ensemble_arbitrating':
             vals[index] = 'Arbitrating'
+        if value == 'mordred_10':
+            vals[index] = '-Mordred (10)'
+        if value == 'mordred_20':
+            vals[index] = '-Mordred (20)'
+        if value == 'mordred_100':
+            vals[index] = '-Mordred (100)'
+        if value == 'mordred_all':
+            vals[index] = '-Mordred (All)'
+        if value == 'morgan':
+            vals[index] = '-Morgan'
+
+    if mol_feat:
+        final_str = ''
+        for val in vals[0:-2]:
+            final_str += val + ' '
+        final_str += vals[-2]
+        final_str += vals[-1]
         
-    return ' '.join(vals)
+        return final_str
+    
+    else:
+        return ' '.join(vals)
 
 def get_colors(label, ensemble=False):
     '''Method for determining color of the bar based on the label.'''
@@ -81,7 +101,7 @@ def get_colors(label, ensemble=False):
             'SV': '#ffca8c',
             'LP': 'white',
             'BKDE': 'white',
-            'E': '#fff2a1',
+            'Ensemble': '#fff2a1',
         }
 
     else:

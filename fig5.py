@@ -9,51 +9,41 @@ if __name__ == '__main__':
     # User specification of what tasks and strategies should be considered, what metrics
     # should be used, save options, etc.
     config = {
-        'tasks': ['electro'],
+        'tasks': all_tasks,
         'schemes': ['al', 'sf'],
         'samplers': ['random', 'maximin', 'medoids', 'max_entropy', 'vendi'],
         'models': ['nn', 'rf', 'xgb', 'gpc_ard', 'gpr_ard', 'gpc', 'gpr', 'sv', 'lp', 'bkde'],
         'round': 10,           # Rounds vary from 0-10.
         'metric': 1,           # 0 - Balanced Accuracy, 1 - Macro F1, 2 - Matt. Corr. Coeff.
-        'use_baseline': True,  # True uses baseline for comparison. False only uses the metric.
-        'labels': False,       # False removes labels from final figure.
-        'save_fig': './figures/fig5.png' # Specifies path for saving figure.
     }
 
     # Read in algorithm and baseline results.
     results_dict = pickle.load(open('results.pickle', 'rb'))
-    baseline_dict = pickle.load(open('baseline/baseline.pickle', 'rb'))
-
-    # Set up figure.
-    colors = ['#ffca8c','#91dbff']
-    plt.rcParams['font.family'] = 'Arial'
-    plt.rcParams['font.size'] = 14
-    plt.rcParams['axes.linewidth'] = 1.5
     
     # Define what rounds will be compared.
     rounds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     algo_sets = [
         [
-            'al-vendi-nn',
             'al-maximin-nn',
+            'al-vendi-nn',
             'al-random-nn',
             'al-medoids-nn',
             'al-max_entropy-nn',
-            'al-medoids-rf',
             'al-maximin-rf',
+            'al-maximin-gpc_ard',
+            'al-medoids-rf',
             'al-vendi-rf',
             'al-random-rf',
-            'al-maximin-gpc_ard',
             'al-max_entropy-rf',
             'al-medoids-gpc_ard',
-            'al-maximin-xgb',
+            'al-vendi-gpc_ard',
+            'al-maximin-gpc',
+            'al-random-gpc_ard',
             'al-medoids-gpr_ard',
             'al-maximin-gpr_ard',
-            'al-vendi-gpr_ard',
-            'al-medoids-sv',
+            'al-random-gpr_ard',
             'al-max_entropy-gpr_ard',
-            'al-maximin-gpr',
-            'al-medoids-gpr'
+            'al-maximin-xgb'
         ],
         [f'{scheme}-{sampler}-{model}' for scheme in config['schemes'] for sampler in config['samplers'] for model in config['models']]
     ]
@@ -92,24 +82,5 @@ if __name__ == '__main__':
             metrics = np.array(metrics)
             plot_data[idx2].append(np.count_nonzero(np.where(metrics > 1.00, 1, 0)) / metrics.shape[0])
 
-    # Plot figure.
-    plt.figure(figsize=(5.5,5))
-    for index, data in enumerate(plot_data):
-        plt.bar(x=rounds, height=data, color=colors[index], edgecolor='black', linewidth=1.5, zorder=10, label=labels[index])
-    plt.xlabel('Rounds')
-    plt.xticks(np.arange(1, 11, 1.0))
-    plt.ylabel('Fraction at which AL out-performs SF')
-    plt.ylim(ymax=1.0)
-    plt.grid(alpha=0.5, axis='y', zorder=1)
-    plt.tick_params(axis='y', left=False, right=False)
-    plt.tight_layout()
-    if not config['labels']:
-        plt.xticks(ticks=np.arange(1, 11, 1.0), labels=[])
-        plt.yticks(ticks=[0.0, 0.2, 0.4, 0.6, 0.8, 1.0], labels=[])
-        plt.xlabel('')
-        plt.ylabel('')
-    else:
-        plt.legend(loc='upper left')
-    if config['save_fig'] is not None:
-        plt.savefig(f'{config["save_fig"]}', dpi=1000)
-    plt.show()
+    # Save data.
+    pickle.dump(plot_data, open('./data/fig5.pkl', 'wb'), protocol=pickle.HIGHEST_PROTOCOL)

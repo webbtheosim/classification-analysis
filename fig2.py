@@ -11,6 +11,7 @@ if __name__ == '__main__':
     y = dataset[:,-1]
     colors = ['#91dbff' if y_ == 1 else '#fe7c7c' for y_ in y]
     samplers = ['random', 'maximin', 'medoids', 'max_entropy', 'vendi']
+    titles = ['A', 'B', 'C', 'D', 'E']
     title_dict = {
         'random': 'Random',
         'maximin': 'Maximin',
@@ -42,8 +43,7 @@ if __name__ == '__main__':
         axs[index].set_ylim([np.min(X[:,1]), np.max(X[:,1])])
         axs[index].set_xticks([])
         axs[index].set_yticks([])
-        axs[index].set_title(f'{title_dict[sampler]}')
-        axs[index].set_title('*')
+        axs[index].set_title(titles[index])
 
     # Finish figure.
     plt.tight_layout()

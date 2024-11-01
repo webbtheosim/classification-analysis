@@ -3,6 +3,7 @@ import numpy as np
 import pickle
 
 from utils import *
+from fig3 import convert_to_baseline
 
 if __name__ == '__main__':
 
@@ -16,12 +17,11 @@ if __name__ == '__main__':
         'round': 10,           # Rounds vary from 0-10.
         'metric': 1,           # 0 - Balanced Accuracy, 1 - Macro F1, 2 - Matt. Corr. Coeff.
         'use_baseline': True,  # True uses baseline for comparison. False only uses the metric.
-        'labels': True,       # False removes labels from final figure.
-        'save_fig': './figures/fig4.png' # Specifies path for saving figure.
     }
 
     # Load results.
     results_dict = pickle.load(open('results.pickle', 'rb'))
+    baseline_dict = load_baseline_raw()
 
     # Compute results on a task by task basis.
     performance = {}
@@ -38,7 +38,9 @@ if __name__ == '__main__':
                     scores = []
                     for seed in results[scheme][sampler][model].keys():
                         scores.append(results[scheme][sampler][model][seed][config['round'],config['metric']+1].item())
-                    score_mean   = np.mean(scores, axis=0)
+                    if config['use_baseline']:
+                        scores = convert_to_baseline(scores=scores, task=task, dict=baseline_dict, metric=config['metric'])
+                    score_mean  = np.mean(scores, axis=0)
                     label = f'{scheme}-{sampler}-{model}'
                     plot_data[label] = score_mean
 
@@ -46,32 +48,6 @@ if __name__ == '__main__':
         for label in plot_data.keys():
             if label not in performance.keys():
                 performance[label] = []
-
-        # If specified, recast metrics in terms of baseline performance.
-        if config['use_baseline']:
-
-            # Read in baseline performances.
-            baseline_dict = pickle.load(open('baseline/baseline.pickle', 'rb'))
-
-            for key, value in plot_data.items():
-                vals    = key.split('-')
-                scheme  = vals[0]
-                sampler = vals[1]
-                model   = vals[2]
-                baseline_data = baseline_dict[task][config['metric'],:,:]
-
-                # Calculate mean ξ.
-                mean_naive  = -1
-                for row in range(baseline_data.shape[0]):
-                    if value < baseline_data[row,1]:
-                        mean_naive = row + 1
-                        break
-
-                # If strategy performs better than all baseline models,
-                # assign it the size of the dataset.
-                task_size = baseline_data.shape[0] + 1
-                mean_naive = mean_naive if mean_naive != -1 else task_size
-                plot_data[key] = mean_naive
 
         # Determine best mean performance for this task.
         best_mean_performance = 0.0
@@ -111,37 +87,9 @@ if __name__ == '__main__':
     # Arrange data for grouped bar plot.
     plot_data = {
         'Active Learning': list(al_data.values()),
-        'Space Filling': list(sf_data.values())
+        'Space Filling': list(sf_data.values()),
+        'Model Names': list(al_data.keys())
     }
-    models = [get_labels(key) for key in al_data.keys()]
 
-    # Make a bar plot with these fractions.
-    plt.rcParams['font.family'] = 'Arial'
-    plt.rcParams['font.size'] = 14
-    plt.rcParams['xtick.labelsize'] = 12
-    plt.rcParams['axes.linewidth'] = 2.0
-    plt.figure(figsize=(11,5))
-    x = np.arange(len(models))
-    width = 0.25
-    multiplier = 0
-    colors = ['#ca9fff', '#fff2a1']
-    for index, (attribute, measurement) in enumerate(plot_data.items()):
-        offset = width * multiplier
-        rects = plt.bar(x + offset, measurement, width, label=attribute, color=colors[index], edgecolor='black', linewidth=2.0, zorder=10)
-        multiplier += 1
-    plt.xticks(x + 0.5 * offset, models)
-    plt.tick_params(axis='y', left=False, right=False)
-    plt.ylim(ymax=1.05)
-    plt.grid(alpha=0.5, axis='y', zorder=1)
-    plt.tight_layout()
-    if config['labels']:
-        plt.ylabel('Fraction of Sub-Optimality')
-        plt.legend()
-    else:
-        plt.xticks(ticks=x + 0.5 * offset, labels=[])
-        plt.yticks(ticks=[0.0, 0.2, 0.4, 0.6, 0.8, 1.0], labels=[])
-        plt.xlabel('')
-        plt.ylabel('')
-    if config['save_fig'] is not None:
-        plt.savefig(f'{config["save_fig"]}', dpi=1000)
-    plt.show()
+    # Save data to file.
+    pickle.dump(plot_data, open('./data/fig4.pkl', 'wb'), protocol=pickle.HIGHEST_PROTOCOL)

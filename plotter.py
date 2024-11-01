@@ -320,35 +320,44 @@ if __name__ == '__main__':
     # Prepare metafeatures parity plots.
     if args.fig == 8:
 
-        # # Visualize parity plot.
-        # plt.rcParams['font.family'] = 'Helvetica'
-        # plt.rcParams['axes.linewidth'] = 1.5
-        # plt.rcParams['font.size'] = 18
-        # fig, ax = plt.subplots(1,1,figsize=(5,5))
-        # color_all = '#91dbff'
-        # color_top = '#ffca8c'
-        # ax.scatter(y_true_mf, y_pred_mf, 
-        #     color=color_all if ALGORITHM_SET == 'all' else color_top, 
-        #     s=20.0, edgecolors='black', linewidth=1.0, zorder=9, clip_on=False
-        # )
-        # parity = np.linspace(0.0, 1.10, num=1000)
-        # ax.plot(parity, parity, color='black', linewidth=2.0, zorder=10)
-        # ax.grid(alpha=0.5, zorder=2)
-        # ax.set_xlim([0.1, 1.10])
-        # ax.set_ylim([0.1, 1.10])
-        # ax.set_xticks(ticks=[0.2, 0.4, 0.6, 0.8, 1.0])
-        # ax.set_yticks(ticks=[0.2, 0.4, 0.6, 0.8, 1.0])
-        # ax.tick_params(axis='both', direction='in', left=True, right=True, bottom=True, top=True, width=1.5)
-        # if LABELS:
-        #     ax.set_xlabel(r'True Macro F$_1$')
-        #     ax.set_ylabel(r'Predicted Macro F$_1$')
-        # if not LABELS:
-        #     ax.set_xlabel('')
-        #     ax.set_ylabel('')
-        # if SAVE:
-        #     plt.savefig(f'figures/fig8_{ALGORITHM_SET}.png', dpi=1000)
-        # plt.show()
-        pass
+        # Load in data.
+        final_data = pickle.load(open('./data/fig8.pkl', 'rb'))
+
+        # Visualize parity plots.
+        plt.rcParams['font.family'] = 'Helvetica'
+        plt.rcParams['axes.linewidth'] = 1.5
+        plt.rcParams['font.size'] = 18
+        fig, axs = plt.subplots(1,2,figsize=(9.4,5))
+
+        for key_idx, key in enumerate(final_data.keys()):
+            color = '#91dbff' if key_idx == 0 else '#ffca8c'
+            axs[key_idx].scatter(
+                final_data[key][:,0], final_data[key][:,1], 
+                color=color, s=30.0, edgecolors='black', linewidth=1.0, zorder=9, clip_on=False
+            )
+            parity = np.linspace(0.0, 1.10, num=1000)
+            axs[key_idx].plot(parity, parity, color='black', linewidth=2.0, zorder=10)
+            axs[key_idx].grid(alpha=0.5, zorder=2)
+            axs[key_idx].set_xlim([0.1, 1.10])
+            axs[key_idx].set_ylim([0.1, 1.10])
+            axs[key_idx].set_xticks(ticks=[0.2, 0.4, 0.6, 0.8, 1.0])
+            axs[key_idx].set_yticks(ticks=[0.2, 0.4, 0.6, 0.8, 1.0])
+            axs[key_idx].tick_params(axis='both', direction='in', left=True, right=True, bottom=True, top=True, width=1.5)
+            axs[key_idx].set_xlabel('True ' + r'$F_1$')
+            axs[key_idx].set_ylabel('Predicted ' + r'$F_1$')
+
+        axs[0].set_title('All Algorithms')
+        axs[1].set_title('Top 20 Algorithms')
+        axs[0].text(-0.15, 1.00, 'A', transform=axs[0].transAxes, size=30, weight='bold')
+        axs[1].text(-0.15, 1.00, 'B', transform=axs[1].transAxes, size=30, weight='bold')
+        axs[0].text(0.96, 0.04, 'R\u00b2 = 0.803\nMAE = 7.826%', fontsize=16, transform=axs[0].transAxes, ha='right', va='bottom',
+               bbox=dict(facecolor='white', edgecolor='white'))
+        axs[1].text(0.96, 0.04, 'R\u00b2 = 0.810\nMAE = 6.152%', fontsize=16, transform=axs[1].transAxes, ha='right', va='bottom',
+               bbox=dict(facecolor='white', edgecolor='white'))
+
+        plt.tight_layout()
+        plt.savefig('./figures/fig8.png', dpi=1000)
+        plt.show()
 
     # Plot analysis of molecular feature choices.
     if args.fig == 9:

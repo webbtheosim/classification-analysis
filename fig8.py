@@ -15,26 +15,26 @@ if __name__ == '__main__':
 
     # Get set of algorithms to be considered.
     top_algorithms = [
-        'al-vendi-nn',
         'al-maximin-nn',
+        'al-vendi-nn',
         'al-random-nn',
         'al-medoids-nn',
         'al-max_entropy-nn',
-        'al-medoids-rf',
         'al-maximin-rf',
+        'al-maximin-gpc_ard',
+        'al-medoids-rf',
         'al-vendi-rf',
         'al-random-rf',
-        'al-maximin-gpc_ard',
         'al-max_entropy-rf',
         'al-medoids-gpc_ard',
-        'al-maximin-xgb',
+        'al-vendi-gpc_ard',
+        'al-maximin-gpc',
+        'al-random-gpc_ard',
         'al-medoids-gpr_ard',
         'al-maximin-gpr_ard',
-        'al-vendi-gpr_ard',
-        'al-medoids-sv',
+        'al-random-gpr_ard',
         'al-max_entropy-gpr_ard',
-        'al-maximin-gpr',
-        'al-medoids-gpr'
+        'al-maximin-xgb'
     ]
     all_algorithms = [
         f'{scheme}-{sampler}-{model}' 
@@ -131,7 +131,6 @@ if __name__ == '__main__':
 
         # Generate parity plot for the top-performing set of attributes.
         selected_feature_indices = chosen_mf_indices
-        selected_feature_indices = [feature_names.index('ns_ratio')]
         y_pred_mf = []
         y_true_mf = []
 

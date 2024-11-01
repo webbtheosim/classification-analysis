@@ -2,9 +2,9 @@
 
 This repository contains the data and analysis scripts required to reproduce the results shown in [Data Efficiency of Classification Strategies for Chemical and Materials Design](https://doi.org/10.26434/chemrxiv-2024-1sspf).
 
-![Top-Performing Algorithms](figures/optimal.png)
+![Top-Performing Algorithms](figures/fig3.png)
 
-Every figure can be reproduced using the script with the appropriate name (e.g., `fig3.py` recreates Figure 3). We also include the script `prep_metafeatures.py` that downselects the set of unique and uncorrelated metafeatures (stored in `metafeatures.pickle`) used in the sequential feature addition conducted in `sfa_and_fig8.py`.
+All data required for each figure can be reproduced using the script with the appropriate name (e.g., `fig3.py` recreates the data required for Figure 3). This data is stored in the ``data/`` directory as a pickle file. To plot the appropriate figure, you can use the ``plotter.py`` file. To plot figure 3, you would call ``python plotter.py --fig 3``. This will generate a figure that is stored in the ``figures/`` directory. This process is not necessary for figures 1c and figure 2; the corresponding files will automatically generate the figure themselves. We also include the script `prep_metafeatures.py` that downselects the set of unique and uncorrelated metafeatures (stored in `metafeatures.pickle`) used in the sequential feature addition conducted in `fig8.py`.
 
 ### Data Files
 

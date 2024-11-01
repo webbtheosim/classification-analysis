@@ -29,7 +29,7 @@ if __name__ == '__main__':
     }
 
     # Load appropriate fonts.
-    font_path = '/Users/qg1361/Princeton/Fonts/latex_typewriter.ttf'  # <-- Your font path goes here.
+    font_path = 'latex_typewriter.ttf' 
     matplotlib.font_manager.fontManager.addfont(font_path)
     prop = matplotlib.font_manager.FontProperties(fname=font_path)
 

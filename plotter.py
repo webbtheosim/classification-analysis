@@ -182,7 +182,7 @@ if __name__ == '__main__':
             plt.bar(x=rounds, height=data, color=colors[index], edgecolor='black', linewidth=1.5, zorder=10, label=labels[index])
         plt.xlabel('Rounds', fontsize=17)
         plt.xticks(np.arange(1, 11, 1.0))
-        plt.ylabel('Fraction at which AL out-performs SF', fontsize=17)
+        plt.ylabel('Fraction at which AL outperforms SF', fontsize=17)
         plt.ylim(ymax=1.0)
         plt.grid(alpha=0.5, axis='y', zorder=2)
         plt.tick_params(axis='y', left=False, right=False)

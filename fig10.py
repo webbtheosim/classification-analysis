@@ -50,11 +50,11 @@ if __name__ == '__main__':
 
     plt.rcParams['font.family'] = 'Helvetica' 
     plt.rcParams['font.size'] = 12
-    plt.rcParams['axes.labelsize'] = 16
+    plt.rcParams['axes.labelsize'] = 14
     plt.rcParams['axes.labelweight'] = 'bold'
     plt.rcParams['axes.linewidth'] = 1.75
-    plt.rcParams['xtick.labelsize'] = 14
-    plt.rcParams['ytick.labelsize'] = 14
+    plt.rcParams['xtick.labelsize'] = 12
+    plt.rcParams['ytick.labelsize'] = 12
     plt.rcParams['legend.fontsize'] = 10
     plt.rcParams['figure.titlesize'] = 12
     fig, ax = plt.subplots(1,1,figsize=(5,2.5))

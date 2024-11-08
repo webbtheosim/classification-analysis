@@ -175,7 +175,7 @@ if __name__ == '__main__':
     fig.legend(
         handles=legend_elements, 
         loc='lower center', 
-        ncol=6, 
+        ncol=6,
         fontsize=14, 
         frameon=False,
         handleheight=1.0,

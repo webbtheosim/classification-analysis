@@ -21,22 +21,23 @@ if __name__ == '__main__':
     }
 
     # Prepare figure.
-    plt.rcParams['font.family'] = 'Arial'
-    plt.rcParams['font.size'] = 16
-    fig, axs = plt.subplots(1,len(samplers),figsize=(len(samplers) * (12.0/5.0),3), zorder=1)
+    plt.rcParams['font.family'] = 'Helvetica Neue'
+    plt.rcParams['font.size'] = 12
+    plt.rcParams['axes.linewidth'] = 1.0
+    fig, axs = plt.subplots(1,len(samplers),figsize=(6.5, 1.8), zorder=1)
 
     # Iterate through samplers.
     for index, sampler in enumerate(samplers):
 
         # Plot the domain.
-        axs[index].scatter(X[:,0], X[:,1], c=colors, s=1.0)
+        axs[index].scatter(X[:,0], X[:,1], c=colors, s=0.1)
 
         # Sample points.
         chosen_indices = sample(name=sampler, domain=X, size=30, seed=1)
         chosen_points = X[chosen_indices,:]
 
         # Plot the chosen points.
-        axs[index].scatter(chosen_points[:,0], chosen_points[:,1], c='#FFED7C', s=100.0, edgecolor='black', linewidth=1.5, clip_on=False, zorder=10)
+        axs[index].scatter(chosen_points[:,0], chosen_points[:,1], c='#FFED7C', s=50.0, edgecolor='black', linewidth=1.0, clip_on=False, zorder=10)
 
         # Brush up plot.
         axs[index].set_xlim([np.min(X[:,0]), np.max(X[:,0])])

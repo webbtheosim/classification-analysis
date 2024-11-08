@@ -49,24 +49,24 @@ if __name__ == '__main__':
                             factors.append(scores_large[id2] / scores_small[id1])
 
     plt.rcParams['font.family'] = 'Helvetica' 
-    plt.rcParams['font.size'] = 12
-    plt.rcParams['axes.labelsize'] = 14
+    plt.rcParams['font.size'] = 10
+    plt.rcParams['axes.labelsize'] = 10
     plt.rcParams['axes.labelweight'] = 'bold'
-    plt.rcParams['axes.linewidth'] = 1.75
-    plt.rcParams['xtick.labelsize'] = 12
-    plt.rcParams['ytick.labelsize'] = 12
+    plt.rcParams['axes.linewidth'] = 1.2
+    plt.rcParams['xtick.labelsize'] = 10
+    plt.rcParams['ytick.labelsize'] = 10
     plt.rcParams['legend.fontsize'] = 10
     plt.rcParams['figure.titlesize'] = 12
-    fig, ax = plt.subplots(1,1,figsize=(5,2.5))
+    fig, ax = plt.subplots(1,1,figsize=(3.5,1.8))
     sns.kdeplot(factors, fill=True, alpha=0.1, zorder=2)
     ax.set_ylabel('Frequency')
     ax.set_xlabel('Performance (Large) / Performance (Small)')
     ax.set_xlim(xmin=0.5, xmax=1.5)
     ax.set_ylim(ymin=0.0, ymax=16.0)
-    ax.tick_params(axis='both', left=True, right=True, top=True, bottom=True, direction='in', width=1.75, length=5)
+    ax.tick_params(axis='both', left=True, right=True, top=True, bottom=True, direction='in', width=1.2, length=3.5)
     ax.grid(alpha=0.5, zorder=1)
     plt.tight_layout()
-    plt.savefig('./figures/size_hist.png', dpi=1000)
+    plt.savefig('./figures/fig10.png', dpi=1000)
     plt.show()
 
     results = pickle.load(open('revisions_mf.pkl', 'rb'))
